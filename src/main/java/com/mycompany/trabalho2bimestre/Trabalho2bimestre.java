@@ -19,11 +19,13 @@ public class Trabalho2bimestre {
             System.out.println("\n=== SISTEMA DE LANCHONETE ===");
             System.out.println("1 - Cadastrar cliente");
             System.out.println("2 - Listar clientes");
-            System.out.println("3 - Cadastrar produto");
-            System.out.println("4 - Listar produtos");
-            System.out.println("5 - Atualizar produto");
-            System.out.println("6 - Excluir produto");
-            System.out.println("7 - Finalizar pedido");
+            System.out.println("3 - Atualizar cliente");
+            System.out.println("4 - Excluir cliente");
+            System.out.println("5 - Cadastrar produto");
+            System.out.println("6 - Listar produtos");
+            System.out.println("7 - Atualizar produto");
+            System.out.println("8 - Excluir produto");
+            System.out.println("9 - Finalizar pedido");
             System.out.println("0 - Sair");
             System.out.print("Escolha uma opcao: ");
 
@@ -33,7 +35,6 @@ public class Trabalho2bimestre {
             switch (opcao) {
 
                 case 1:
-
                     System.out.print("Nome do cliente: ");
                     String nomeCliente = scanner.nextLine();
 
@@ -42,17 +43,34 @@ public class Trabalho2bimestre {
 
                     Cliente cliente = new Cliente(nomeCliente, telefone);
                     clienteDAO.cadastrar(cliente);
-
                     break;
 
                 case 2:
-
                     clienteDAO.listar();
-
                     break;
 
                 case 3:
+                    System.out.print("ID do cliente: ");
+                    int idClienteAtualizar = scanner.nextInt();
+                    scanner.nextLine();
 
+                    System.out.print("Novo nome: ");
+                    String novoNomeCliente = scanner.nextLine();
+
+                    System.out.print("Novo telefone: ");
+                    String novoTelefone = scanner.nextLine();
+
+                    clienteDAO.atualizar(idClienteAtualizar, novoNomeCliente, novoTelefone);
+                    break;
+
+                case 4:
+                    System.out.print("ID do cliente: ");
+                    int idClienteExcluir = scanner.nextInt();
+
+                    clienteDAO.excluir(idClienteExcluir);
+                    break;
+
+                case 5:
                     System.out.print("Nome do produto: ");
                     String nomeProduto = scanner.nextLine();
 
@@ -64,23 +82,19 @@ public class Trabalho2bimestre {
 
                     Produto produto = new Produto(nomeProduto, preco, estoque);
                     produtoDAO.cadastrar(produto);
-
                     break;
 
-                case 4:
-
+                case 6:
                     produtoDAO.listar();
-
                     break;
 
-                case 5:
-
+                case 7:
                     System.out.print("ID do produto: ");
-                    int idAtualizar = scanner.nextInt();
+                    int idProdutoAtualizar = scanner.nextInt();
                     scanner.nextLine();
 
                     System.out.print("Novo nome: ");
-                    String novoNome = scanner.nextLine();
+                    String novoNomeProduto = scanner.nextLine();
 
                     System.out.print("Novo preco: ");
                     double novoPreco = scanner.nextDouble();
@@ -88,26 +102,17 @@ public class Trabalho2bimestre {
                     System.out.print("Novo estoque: ");
                     int novoEstoque = scanner.nextInt();
 
-                    produtoDAO.atualizar(
-                            idAtualizar,
-                            novoNome,
-                            novoPreco,
-                            novoEstoque
-                    );
-
+                    produtoDAO.atualizar(idProdutoAtualizar, novoNomeProduto, novoPreco, novoEstoque);
                     break;
 
-                case 6:
-
+                case 8:
                     System.out.print("ID do produto: ");
-                    int idExcluir = scanner.nextInt();
+                    int idProdutoExcluir = scanner.nextInt();
 
-                    produtoDAO.excluir(idExcluir);
-
+                    produtoDAO.excluir(idProdutoExcluir);
                     break;
 
-                case 7:
-
+                case 9:
                     System.out.print("ID do cliente: ");
                     int idCliente = scanner.nextInt();
 
@@ -121,29 +126,18 @@ public class Trabalho2bimestre {
                     System.out.print("Forma de pagamento: ");
                     String formaPagamento = scanner.nextLine();
 
-                    pedidoDAO.finalizarPedido(
-                            idCliente,
-                            idProduto,
-                            quantidade,
-                            formaPagamento
-                    );
-
+                    pedidoDAO.finalizarPedido(idCliente, idProduto, quantidade, formaPagamento);
                     break;
 
                 case 0:
-
                     System.out.println("Sistema encerrado.");
-
                     break;
 
                 default:
-
                     System.out.println("Opcao invalida!");
-
                     break;
             }
 
         } while (opcao != 0);
-
     }
 }

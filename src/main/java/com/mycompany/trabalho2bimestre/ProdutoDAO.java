@@ -8,6 +8,11 @@ public class ProdutoDAO {
 
     public void cadastrar(Produto produto) {
 
+        if (produto.getNome() == null || produto.getNome().isBlank()) {
+            System.out.println("Nome do produto invalido!");
+            return;
+        }
+
         if (produto.getPreco() <= 0) {
             System.out.println("Preco invalido!");
             return;
@@ -18,8 +23,7 @@ public class ProdutoDAO {
             return;
         }
 
-        String sql =
-        "INSERT INTO produto(nome, preco, estoque) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO produto(nome, preco, estoque) VALUES (?, ?, ?)";
 
         try (
             Connection conn = Conexao.conectar();
@@ -50,14 +54,12 @@ public class ProdutoDAO {
         ) {
 
             while (rs.next()) {
-
                 System.out.println(
                     rs.getInt("id") + " - " +
                     rs.getString("nome") + " - R$ " +
                     rs.getDouble("preco") + " - Estoque: " +
                     rs.getInt("estoque")
                 );
-
             }
 
         } catch (Exception e) {
@@ -67,8 +69,22 @@ public class ProdutoDAO {
 
     public void atualizar(int id, String nome, double preco, int estoque) {
 
-        String sql =
-        "UPDATE produto SET nome = ?, preco = ?, estoque = ? WHERE id = ?";
+        if (nome == null || nome.isBlank()) {
+            System.out.println("Nome do produto invalido!");
+            return;
+        }
+
+        if (preco <= 0) {
+            System.out.println("Preco invalido!");
+            return;
+        }
+
+        if (estoque < 0) {
+            System.out.println("Estoque invalido!");
+            return;
+        }
+
+        String sql = "UPDATE produto SET nome = ?, preco = ?, estoque = ? WHERE id = ?";
 
         try (
             Connection conn = Conexao.conectar();
